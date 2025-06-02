@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://127.0.0.1:8000/news -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Мониторинг новостей по ключевым словам</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; }
+        h1 { color: #2b3a55; }
+        .news-item { border-bottom: 1px solid #e0e0e0; padding: 18px 0; }
+        .news-item:last-child { border-bottom: none; }
+        .news-title { font-size: 1.2em; font-weight: bold; color: #1a237e; }
+        .news-summary { margin: 8px 0 6px 0; color: #444; }
+        .news-meta { font-size: 0.95em; color: #888; }
+        .news-link { color: #1976d2; text-decoration: none; }
+        .news-link:hover { text-decoration: underline; }
+    </style>
+<style type="text/css"></style><style type="text/css" id="operaUserStyle">
+  video {
+    filter: -opera-shader(url(data:text/plain;base64,Ly8gaHR0cHM6Ly9naXRodWIuY29tL0dQVU9wZW4tRWZmZWN0cy9GaWRlbGl0eUZYLUNBUwovLyB2MwoKdW5pZm9ybSBzaGFkZXIgaUNodW5rOwp1bmlmb3JtIGZsb2F0MiBpQ2h1bmtTaXplOwp1bmlmb3JtIGZsb2F0MiBpTW91c2U7CnVuaWZvcm0gZmxvYXQgaUFyZ3NbMV07Cgpjb25zdCBmbG9hdCBFUFNJT04gPSAwLjE7CmNvbnN0IGZsb2F0IFZfTUlOID0gMDsKY29uc3QgZmxvYXQgVl9MT1cgPSAwLjI1Owpjb25zdCBmbG9hdCBWX01FRCA9IDAuNTsKY29uc3QgZmxvYXQgVl9ISUdIID0gMC43NTsKY29uc3QgZmxvYXQgVl9NQVggPSAxOwoKY29uc3QgZmxvYXQgVEhSRVNIT0xEX0FSRUEgPSA4MDAgKiA2MDA7CmNvbnN0IGZsb2F0IE1JTl9BUkVBID0gNDAwICogMTAwOwpjb25zdCBmbG9hdCBNSU5fU1RSSVAgPSAyMDsKY29uc3QgZmxvYXQgTUFSR0lOID0gMTsKCmZsb2F0MyBwaXhlbChpbnQgeCwgaW50IHksIGZsb2F0MiB4eSkgewogICAgcmV0dXJuIGlDaHVuay5ldmFsKHh5ICsgZmxvYXQyKHgsIHkpKS5yZ2I7Cn0KCmZsb2F0MyBzaGFycGVuKGZsb2F0MiB4eSkgewogICAgZmxvYXQzIGYgPQogICAgICAgIHBpeGVsKC0xLCAtMSwgeHkpICogIDEgKwogICAgICAgIHBpeGVsKCAwLCAtMSwgeHkpICogLTEgKwogICAgICAgIHBpeGVsKCAxLCAtMSwgeHkpICogIDEgKwoKICAgICAgICBwaXhlbCgtMSwgMCwgeHkpICogLTEgICsKICAgICAgICBwaXhlbCggMCwgMCwgeHkpICogLTEgICsKICAgICAgICBwaXhlbCggMSwgMCwgeHkpICogLTEgICsKCiAgICAgICAgcGl4ZWwoLTEsIDEsIHh5KSAqIDEgICArCiAgICAgICAgcGl4ZWwoIDAsIDEsIHh5KSAqIC0xICArCiAgICAgICAgcGl4ZWwoIDEsIDEsIHh5KSAqIDE7CiAgICByZXR1cm4gZiAvIC0xOwp9CgpmbG9hdDQgUkdYMihmbG9hdDIgeHkpIHsKICAgIGZsb2F0NCBjb2xvciA9IGlDaHVuay5ldmFsKHh5KTsKCiAgICBpZiAoaUNodW5rU2l6ZS54ICogaUNodW5rU2l6ZS55IDwgTUlOX0FSRUEpIHsKICAgICAgICByZXR1cm4gY29sb3I7CiAgICB9CgogICAgaWYgKGlDaHVua1NpemUueSA8IE1JTl9TVFJJUCB8fCBpQ2h1bmtTaXplLnggPCBNSU5fU1RSSVApIHsKICAgICAgICByZXR1cm4gY29sb3I7CiAgICB9CgogICAgaWYgKHh5LnggPCBNQVJHSU4gfHwgeHkueCA+IChpQ2h1bmtTaXplLnggLSBNQVJHSU4pIHx8CiAgICAgICAgeHkueSA8IE1BUkdJTiB8fCB4eS55ID4gKGlDaHVua1NpemUueSAtIE1BUkdJTikpIHsKICAgICAgICByZXR1cm4gY29sb3I7CiAgICB9CgogICAgcmV0dXJuIGZsb2F0NChzaGFycGVuKHh5KSwgMSk7Cn0KCmZsb2F0IG1pbjMoZmxvYXQgeCwgZmxvYXQgeSwgZmxvYXQgeikgewogICAgcmV0dXJuIG1pbih4LCBtaW4oeSwgeikpOwp9CgpmbG9hdCBtYXgzKGZsb2F0IHgsIGZsb2F0IHksIGZsb2F0IHopIHsKICAgIHJldHVybiBtYXgoeCwgbWF4KHksIHopKTsKfQoKZmxvYXQgcmNwKGZsb2F0IHYpIHsKICAgIHJldHVybiAxIC8gdjsKfQoKZmxvYXQzIFJHWDMoZmxvYXQyIHh5LCBmbG9hdCBzdHJlbmd0aCkgewogICAgZmxvYXQzIGEgPSBwaXhlbCgtMSwgLTEsIHh5KTsKICAgIGZsb2F0MyBiID0gcGl4ZWwoIDAsIC0xLCB4eSk7CiAgICBmbG9hdDMgYyA9IHBpeGVsKCAxLCAtMSwgeHkpOwoKICAgIGZsb2F0MyBkID0gcGl4ZWwoLTEsIDAsIHh5KTsKICAgIGZsb2F0MyBlID0gcGl4ZWwoIDAsIDAsIHh5KTsKICAgIGZsb2F0MyBmID0gcGl4ZWwoIDEsIDAsIHh5KTsKCiAgICBmbG9hdDMgZyA9IHBpeGVsKC0xLCAxLCB4eSk7CiAgICBmbG9hdDMgaCA9IHBpeGVsKCAwLCAxLCB4eSk7CiAgICBmbG9hdDMgaSA9IHBpeGVsKCAxLCAxLCB4eSk7CgogICAgZmxvYXQgbW5SID0gbWluMyhtaW4zKGQuciwgZS5yLCBmLnIpLCBiLnIsIGgucik7CiAgICBmbG9hdCBtbkcgPSBtaW4zKG1pbjMoZC5nLCBlLmcsIGYuZyksIGIuZywgaC5nKTsKICAgIGZsb2F0IG1uQiA9IG1pbjMobWluMyhkLmIsIGUuYiwgZi5iKSwgYi5iLCBoLmIpOwoKICAgIGZsb2F0IG1uUjIgPSBtaW4zKG1pbjMobW5SLCBhLnIsIGMuciksIGcuciwgaS5yKTsKICAgIGZsb2F0IG1uRzIgPSBtaW4zKG1pbjMobW5HLCBhLmcsIGMuZyksIGcuZywgaS5nKTsKICAgIGZsb2F0IG1uQjIgPSBtaW4zKG1pbjMobW5CLCBhLmIsIGMuYiksIGcuYiwgaS5iKTsKCiAgICBtblIgPSBtblIgKyBtblIyOwogICAgbW5HID0gbW5HICsgbW5HMjsKICAgIG1uQiA9IG1uQiArIG1uQjI7CgogICAgZmxvYXQgbXhSID0gbWF4MyhtYXgzKGQuciwgZS5yLCBmLnIpLCBiLnIsIGgucik7CiAgICBmbG9hdCBteEcgPSBtYXgzKG1heDMoZC5nLCBlLmcsIGYuZyksIGIuZywgaC5nKTsKICAgIGZsb2F0IG14QiA9IG1heDMobWF4MyhkLmIsIGUuYiwgZi5iKSwgYi5iLCBoLmIpOwoKICAgIGZsb2F0IG14UjIgPSBtYXgzKG1heDMobXhSLCBhLnIsIGMuciksIGcuciwgaS5yKTsKICAgIGZsb2F0IG14RzIgPSBtYXgzKG1heDMobXhHLCBhLmcsIGMuZyksIGcuZywgaS5nKTsKICAgIGZsb2F0IG14QjIgPSBtYXgzKG1heDMobXhCLCBhLmIsIGMuYiksIGcuYiwgaS5iKTsKCiAgICBteFIgPSBteFIgKyBteFIyOwogICAgbXhHID0gbXhHICsgbXhHMjsKICAgIG14QiA9IG14QiArIG14QjI7CgogICAgZmxvYXQgcmNwTVIgPSByY3AobXhSKTsKICAgIGZsb2F0IHJjcE1HID0gcmNwKG14Ryk7CiAgICBmbG9hdCByY3BNQiA9IHJjcChteEIpOwoKICAgIGZsb2F0IGFtcFIgPSBzYXR1cmF0ZShtaW4obW5SLCAyIC0gbXhSKSAqIHJjcE1SKTsKICAgIGZsb2F0IGFtcEcgPSBzYXR1cmF0ZShtaW4obW5HLCAyIC0gbXhHKSAqIHJjcE1HKTsKICAgIGZsb2F0IGFtcEIgPSBzYXR1cmF0ZShtaW4obW5CLCAyIC0gbXhCKSAqIHJjcE1CKTsKCiAgICBhbXBSID0gc3FydChhbXBSKTsKICAgIGFtcEcgPSBzcXJ0KGFtcEcpOwogICAgYW1wQiA9IHNxcnQoYW1wQik7CgogICAgZmxvYXQgcGVhayA9IC1yY3AobWl4KDgsIDUsIHN0cmVuZ3RoKSk7CgogICAgZmxvYXQgd1IgPSBhbXBSICogcGVhazsKICAgIGZsb2F0IHdHID0gYW1wRyAqIHBlYWs7CiAgICBmbG9hdCB3QiA9IGFtcEIgKiBwZWFrOwoKICAgIGZsb2F0IHJjcFdlaWdodFIgPSByY3AoMSArIDQgKiB3Uik7CiAgICBmbG9hdCByY3BXZWlnaHRHID0gcmNwKDEgKyA0ICogd0cpOwogICAgZmxvYXQgcmNwV2VpZ2h0QiA9IHJjcCgxICsgNCAqIHdCKTsKCiAgICByZXR1cm4gZmxvYXQzKAogICAgICAgIHNhdHVyYXRlKChiLnIgKiB3UiArIGQuciAqIHdSICsgZi5yICogd1IgKyBoLnIgKiB3UiArIGUucikgKiByY3BXZWlnaHRSKSwKICAgICAgICBzYXR1cmF0ZSgoYi5nICogd0cgKyBkLmcgKiB3RyArIGYuZyAqIHdHICsgaC5nICogd0cgKyBlLmcpICogcmNwV2VpZ2h0RyksCiAgICAgICAgc2F0dXJhdGUoKGIuYiAqIHdCICsgZC5iICogd0IgKyBmLmIgKiB3QiArIGguYiAqIHdCICsgZS5iKSAqIHJjcFdlaWdodEIpKTsKfQoKCmZsb2F0NCBtYWluKGZsb2F0MiB4eSkgewoKICAgIGZsb2F0NCBvcmlnaW5hbENvbG9yID0gaUNodW5rLmV2YWwoeHkpOwogICAgaWYgKG9yaWdpbmFsQ29sb3IuYSA8IDEpIHsKICAgICAgICByZXR1cm4gaUNodW5rLmV2YWwoeHkpOwogICAgfQoKICAgIGZsb2F0IGludGVuc2l0eSA9IGlBcmdzWzBdOwogICAgZmxvYXQgc3RyZW5ndGggPSAwOwogICAgZmxvYXQzIGNvbG9yOwoKICAgIGlmIChpbnRlbnNpdHkgPCBWX01JTiArIEVQU0lPTikgewogICAgICAgIHN0cmVuZ3RoID0gMC4xMDsKICAgICAgICBjb2xvciA9IFJHWDMoeHksIHN0cmVuZ3RoKTsKCiAgICB9IGVsc2UgaWYgKGludGVuc2l0eSA+IFZfTE9XIC0gRVBTSU9OICYmIGludGVuc2l0eSA8IFZfTE9XICsgRVBTSU9OKSB7CiAgICAgICAgc3RyZW5ndGggPSAwLjMzOwogICAgICAgIGNvbG9yID0gUkdYMyh4eSwgc3RyZW5ndGgpOwoKICAgIH0gZWxzZSBpZiAoaW50ZW5zaXR5ID4gVl9NRUQgLSBFUFNJT04gJiYgaW50ZW5zaXR5IDwgVl9NRUQgKyBFUFNJT04pIHsKICAgICAgICBzdHJlbmd0aCA9IDAuNTsKICAgICAgICBjb2xvciA9IFJHWDMoeHksIHN0cmVuZ3RoKTsKCiAgICB9IGVsc2UgaWYgKGludGVuc2l0eSA+IFZfSElHSCAtIEVQU0lPTiAmJiBpbnRlbnNpdHkgPCBWX0hJR0ggKyBFUFNJT04pIHsKICAgICAgICBzdHJlbmd0aCA9IDAuOTk7CiAgICAgICAgY29sb3IgPSBSR1gzKHh5LCBzdHJlbmd0aCk7CgogICAgfSBlbHNlIGlmIChpbnRlbnNpdHkgPiBWX01BWCAtIEVQU0lPTikgewogICAgICAgIHN0cmVuZ3RoID0gMTsKICAgICAgICBjb2xvciA9IFJHWDIoeHkpLnJnYjsKICAgIH0KCiAgICByZXR1cm4gZmxvYXQ0KGNvbG9yLCBvcmlnaW5hbENvbG9yLmEpOwp9) -opera-args(1.00 calc(env(-opera-accent-color-r, 255)/255) calc(env(-opera-accent-color-g, 255)/255) calc(env(-opera-accent-color-b, 255)/255)));
+  }
+
+
+  img {
+    filter: -opera-shader(url(data:text/plain;base64,Ly8gaHR0cHM6Ly9naXRodWIuY29tL0dQVU9wZW4tRWZmZWN0cy9GaWRlbGl0eUZYLUNBUwovLyB2MwoKdW5pZm9ybSBzaGFkZXIgaUNodW5rOwp1bmlmb3JtIGZsb2F0MiBpQ2h1bmtTaXplOwp1bmlmb3JtIGZsb2F0MiBpTW91c2U7CnVuaWZvcm0gZmxvYXQgaUFyZ3NbMV07Cgpjb25zdCBmbG9hdCBFUFNJT04gPSAwLjE7CmNvbnN0IGZsb2F0IFZfTUlOID0gMDsKY29uc3QgZmxvYXQgVl9MT1cgPSAwLjI1Owpjb25zdCBmbG9hdCBWX01FRCA9IDAuNTsKY29uc3QgZmxvYXQgVl9ISUdIID0gMC43NTsKY29uc3QgZmxvYXQgVl9NQVggPSAxOwoKY29uc3QgZmxvYXQgVEhSRVNIT0xEX0FSRUEgPSA4MDAgKiA2MDA7CmNvbnN0IGZsb2F0IE1JTl9BUkVBID0gNDAwICogMTAwOwpjb25zdCBmbG9hdCBNSU5fU1RSSVAgPSAyMDsKY29uc3QgZmxvYXQgTUFSR0lOID0gMTsKCmZsb2F0MyBwaXhlbChpbnQgeCwgaW50IHksIGZsb2F0MiB4eSkgewogICAgcmV0dXJuIGlDaHVuay5ldmFsKHh5ICsgZmxvYXQyKHgsIHkpKS5yZ2I7Cn0KCmZsb2F0MyBzaGFycGVuKGZsb2F0MiB4eSkgewogICAgZmxvYXQzIGYgPQogICAgICAgIHBpeGVsKC0xLCAtMSwgeHkpICogIDEgKwogICAgICAgIHBpeGVsKCAwLCAtMSwgeHkpICogLTEgKwogICAgICAgIHBpeGVsKCAxLCAtMSwgeHkpICogIDEgKwoKICAgICAgICBwaXhlbCgtMSwgMCwgeHkpICogLTEgICsKICAgICAgICBwaXhlbCggMCwgMCwgeHkpICogLTEgICsKICAgICAgICBwaXhlbCggMSwgMCwgeHkpICogLTEgICsKCiAgICAgICAgcGl4ZWwoLTEsIDEsIHh5KSAqIDEgICArCiAgICAgICAgcGl4ZWwoIDAsIDEsIHh5KSAqIC0xICArCiAgICAgICAgcGl4ZWwoIDEsIDEsIHh5KSAqIDE7CiAgICByZXR1cm4gZiAvIC0xOwp9CgpmbG9hdDQgUkdYMihmbG9hdDIgeHkpIHsKICAgIGZsb2F0NCBjb2xvciA9IGlDaHVuay5ldmFsKHh5KTsKCiAgICBpZiAoaUNodW5rU2l6ZS54ICogaUNodW5rU2l6ZS55IDwgTUlOX0FSRUEpIHsKICAgICAgICByZXR1cm4gY29sb3I7CiAgICB9CgogICAgaWYgKGlDaHVua1NpemUueSA8IE1JTl9TVFJJUCB8fCBpQ2h1bmtTaXplLnggPCBNSU5fU1RSSVApIHsKICAgICAgICByZXR1cm4gY29sb3I7CiAgICB9CgogICAgaWYgKHh5LnggPCBNQVJHSU4gfHwgeHkueCA+IChpQ2h1bmtTaXplLnggLSBNQVJHSU4pIHx8CiAgICAgICAgeHkueSA8IE1BUkdJTiB8fCB4eS55ID4gKGlDaHVua1NpemUueSAtIE1BUkdJTikpIHsKICAgICAgICByZXR1cm4gY29sb3I7CiAgICB9CgogICAgcmV0dXJuIGZsb2F0NChzaGFycGVuKHh5KSwgMSk7Cn0KCmZsb2F0IG1pbjMoZmxvYXQgeCwgZmxvYXQgeSwgZmxvYXQgeikgewogICAgcmV0dXJuIG1pbih4LCBtaW4oeSwgeikpOwp9CgpmbG9hdCBtYXgzKGZsb2F0IHgsIGZsb2F0IHksIGZsb2F0IHopIHsKICAgIHJldHVybiBtYXgoeCwgbWF4KHksIHopKTsKfQoKZmxvYXQgcmNwKGZsb2F0IHYpIHsKICAgIHJldHVybiAxIC8gdjsKfQoKZmxvYXQzIFJHWDMoZmxvYXQyIHh5LCBmbG9hdCBzdHJlbmd0aCkgewogICAgZmxvYXQzIGEgPSBwaXhlbCgtMSwgLTEsIHh5KTsKICAgIGZsb2F0MyBiID0gcGl4ZWwoIDAsIC0xLCB4eSk7CiAgICBmbG9hdDMgYyA9IHBpeGVsKCAxLCAtMSwgeHkpOwoKICAgIGZsb2F0MyBkID0gcGl4ZWwoLTEsIDAsIHh5KTsKICAgIGZsb2F0MyBlID0gcGl4ZWwoIDAsIDAsIHh5KTsKICAgIGZsb2F0MyBmID0gcGl4ZWwoIDEsIDAsIHh5KTsKCiAgICBmbG9hdDMgZyA9IHBpeGVsKC0xLCAxLCB4eSk7CiAgICBmbG9hdDMgaCA9IHBpeGVsKCAwLCAxLCB4eSk7CiAgICBmbG9hdDMgaSA9IHBpeGVsKCAxLCAxLCB4eSk7CgogICAgZmxvYXQgbW5SID0gbWluMyhtaW4zKGQuciwgZS5yLCBmLnIpLCBiLnIsIGgucik7CiAgICBmbG9hdCBtbkcgPSBtaW4zKG1pbjMoZC5nLCBlLmcsIGYuZyksIGIuZywgaC5nKTsKICAgIGZsb2F0IG1uQiA9IG1pbjMobWluMyhkLmIsIGUuYiwgZi5iKSwgYi5iLCBoLmIpOwoKICAgIGZsb2F0IG1uUjIgPSBtaW4zKG1pbjMobW5SLCBhLnIsIGMuciksIGcuciwgaS5yKTsKICAgIGZsb2F0IG1uRzIgPSBtaW4zKG1pbjMobW5HLCBhLmcsIGMuZyksIGcuZywgaS5nKTsKICAgIGZsb2F0IG1uQjIgPSBtaW4zKG1pbjMobW5CLCBhLmIsIGMuYiksIGcuYiwgaS5iKTsKCiAgICBtblIgPSBtblIgKyBtblIyOwogICAgbW5HID0gbW5HICsgbW5HMjsKICAgIG1uQiA9IG1uQiArIG1uQjI7CgogICAgZmxvYXQgbXhSID0gbWF4MyhtYXgzKGQuciwgZS5yLCBmLnIpLCBiLnIsIGgucik7CiAgICBmbG9hdCBteEcgPSBtYXgzKG1heDMoZC5nLCBlLmcsIGYuZyksIGIuZywgaC5nKTsKICAgIGZsb2F0IG14QiA9IG1heDMobWF4MyhkLmIsIGUuYiwgZi5iKSwgYi5iLCBoLmIpOwoKICAgIGZsb2F0IG14UjIgPSBtYXgzKG1heDMobXhSLCBhLnIsIGMuciksIGcuciwgaS5yKTsKICAgIGZsb2F0IG14RzIgPSBtYXgzKG1heDMobXhHLCBhLmcsIGMuZyksIGcuZywgaS5nKTsKICAgIGZsb2F0IG14QjIgPSBtYXgzKG1heDMobXhCLCBhLmIsIGMuYiksIGcuYiwgaS5iKTsKCiAgICBteFIgPSBteFIgKyBteFIyOwogICAgbXhHID0gbXhHICsgbXhHMjsKICAgIG14QiA9IG14QiArIG14QjI7CgogICAgZmxvYXQgcmNwTVIgPSByY3AobXhSKTsKICAgIGZsb2F0IHJjcE1HID0gcmNwKG14Ryk7CiAgICBmbG9hdCByY3BNQiA9IHJjcChteEIpOwoKICAgIGZsb2F0IGFtcFIgPSBzYXR1cmF0ZShtaW4obW5SLCAyIC0gbXhSKSAqIHJjcE1SKTsKICAgIGZsb2F0IGFtcEcgPSBzYXR1cmF0ZShtaW4obW5HLCAyIC0gbXhHKSAqIHJjcE1HKTsKICAgIGZsb2F0IGFtcEIgPSBzYXR1cmF0ZShtaW4obW5CLCAyIC0gbXhCKSAqIHJjcE1CKTsKCiAgICBhbXBSID0gc3FydChhbXBSKTsKICAgIGFtcEcgPSBzcXJ0KGFtcEcpOwogICAgYW1wQiA9IHNxcnQoYW1wQik7CgogICAgZmxvYXQgcGVhayA9IC1yY3AobWl4KDgsIDUsIHN0cmVuZ3RoKSk7CgogICAgZmxvYXQgd1IgPSBhbXBSICogcGVhazsKICAgIGZsb2F0IHdHID0gYW1wRyAqIHBlYWs7CiAgICBmbG9hdCB3QiA9IGFtcEIgKiBwZWFrOwoKICAgIGZsb2F0IHJjcFdlaWdodFIgPSByY3AoMSArIDQgKiB3Uik7CiAgICBmbG9hdCByY3BXZWlnaHRHID0gcmNwKDEgKyA0ICogd0cpOwogICAgZmxvYXQgcmNwV2VpZ2h0QiA9IHJjcCgxICsgNCAqIHdCKTsKCiAgICByZXR1cm4gZmxvYXQzKAogICAgICAgIHNhdHVyYXRlKChiLnIgKiB3UiArIGQuciAqIHdSICsgZi5yICogd1IgKyBoLnIgKiB3UiArIGUucikgKiByY3BXZWlnaHRSKSwKICAgICAgICBzYXR1cmF0ZSgoYi5nICogd0cgKyBkLmcgKiB3RyArIGYuZyAqIHdHICsgaC5nICogd0cgKyBlLmcpICogcmNwV2VpZ2h0RyksCiAgICAgICAgc2F0dXJhdGUoKGIuYiAqIHdCICsgZC5iICogd0IgKyBmLmIgKiB3QiArIGguYiAqIHdCICsgZS5iKSAqIHJjcFdlaWdodEIpKTsKfQoKCmZsb2F0NCBtYWluKGZsb2F0MiB4eSkgewoKICAgIGZsb2F0NCBvcmlnaW5hbENvbG9yID0gaUNodW5rLmV2YWwoeHkpOwogICAgaWYgKG9yaWdpbmFsQ29sb3IuYSA8IDEpIHsKICAgICAgICByZXR1cm4gaUNodW5rLmV2YWwoeHkpOwogICAgfQoKICAgIGZsb2F0IGludGVuc2l0eSA9IGlBcmdzWzBdOwogICAgZmxvYXQgc3RyZW5ndGggPSAwOwogICAgZmxvYXQzIGNvbG9yOwoKICAgIGlmIChpbnRlbnNpdHkgPCBWX01JTiArIEVQU0lPTikgewogICAgICAgIHN0cmVuZ3RoID0gMC4xMDsKICAgICAgICBjb2xvciA9IFJHWDMoeHksIHN0cmVuZ3RoKTsKCiAgICB9IGVsc2UgaWYgKGludGVuc2l0eSA+IFZfTE9XIC0gRVBTSU9OICYmIGludGVuc2l0eSA8IFZfTE9XICsgRVBTSU9OKSB7CiAgICAgICAgc3RyZW5ndGggPSAwLjMzOwogICAgICAgIGNvbG9yID0gUkdYMyh4eSwgc3RyZW5ndGgpOwoKICAgIH0gZWxzZSBpZiAoaW50ZW5zaXR5ID4gVl9NRUQgLSBFUFNJT04gJiYgaW50ZW5zaXR5IDwgVl9NRUQgKyBFUFNJT04pIHsKICAgICAgICBzdHJlbmd0aCA9IDAuNTsKICAgICAgICBjb2xvciA9IFJHWDMoeHksIHN0cmVuZ3RoKTsKCiAgICB9IGVsc2UgaWYgKGludGVuc2l0eSA+IFZfSElHSCAtIEVQU0lPTiAmJiBpbnRlbnNpdHkgPCBWX0hJR0ggKyBFUFNJT04pIHsKICAgICAgICBzdHJlbmd0aCA9IDAuOTk7CiAgICAgICAgY29sb3IgPSBSR1gzKHh5LCBzdHJlbmd0aCk7CgogICAgfSBlbHNlIGlmIChpbnRlbnNpdHkgPiBWX01BWCAtIEVQU0lPTikgewogICAgICAgIHN0cmVuZ3RoID0gMTsKICAgICAgICBjb2xvciA9IFJHWDIoeHkpLnJnYjsKICAgIH0KCiAgICByZXR1cm4gZmxvYXQ0KGNvbG9yLCBvcmlnaW5hbENvbG9yLmEpOwp9) -opera-args(1.00 calc(env(-opera-accent-color-r, 255)/255) calc(env(-opera-accent-color-g, 255)/255) calc(env(-opera-accent-color-b, 255)/255)));
+  }
+</style></head>
+<body>
+    <div class="container">
+        <h1>Актуальные новости</h1>
+        
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России высказались об ожиданиях от второго раунда переговоров с Украиной</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/ozhidaniya/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России раскрыли влияние атаки беспилотников ВСУ на переговоры в Стамбуле</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-rossii-raskryli-vliyanie-ataki-bespilotnikov-vsu-na-peregovory-v-stambule/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России объяснили секретность меморандума до начала переговоров в Стамбуле</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-rossii-ob-yasnili-sekretnost-memoranduma-do-nachala-peregovorov-v-stambule/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Пугачеву пригласили в Россию</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/pugachevu-priglasili-v-rossiyu/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Власти уточнили данные о разрушениях после ночной атаки ВСУ на столицу региона России</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/vlasti-utochnili-dannye-o-razrusheniyah-posle-nochnoy-ataki-vsu-na-stolitsu-regiona-rossii/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Стала известна отправная точка Украины на переговорах с Россией</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/stala-izvestna-otpravnaya-tochka-ukrainy-na-peregovorah-s-rossiey/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиянам раскрыли страны для пляжного отдыха дешевле 75 тысяч рублей</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyanam-raskryli-strany-dlya-plyazhnogo-otdyha-deshevle-75-tysyach-rubley/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Минпромторг объяснил отсутствие желающих вернуться в Россию западных компаний</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/minpromtorg-ob-yasnil-otsutstvie-zhelayuschih-vernutsya-v-rossiyu-zapadnyh-kompaniy/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Водители фур дали показания о запуске дронов в регионах России</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/voditeli-fur-dali-pokazaniya-o-zapuske-dronov-v-regionah-rossii/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Bloomberg сообщил о скором снижении ключевой ставки в России</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/bloomberg-uznal-o-gotovyaschemsya-v-rossii-snizhenii-klyuchevoy-stavki/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Раскрыто время начала переговоров России и Украины в Стамбуле</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/raskryto-vremya-nachala-peregovorov-rossii-i-ukrainy-v-stambule/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиянам назвали скрытые причины разрушения зубов</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyanam-nazvali-skrytye-prichiny-razrusheniya-zubov/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Пытавшихся сбить камнями вылетающие из фуры дроны россиян захотели наградить</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/pytavshihsya-kamnyami-sbit-vyletayuschie-iz-fury-drony-rossiyan-zahoteli-nagradit/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Стал известен еще один участник переговоров России и Украины</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/stal-izvesten-esche-odin-uchastnik-peregovorov-rossii-i-ukrainy/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиян предупредили об угрожающей Крыму опасности</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyan-predupredili-ob-ugrozhayuschey-krymu-opasnosti/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">На Западе предупредили об угрозе ядерной войны между Россией и НАТО</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/na-zapade-zayavili-ob-ugroze-yadernoy-voyny-rossii-i-nato/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиянина со сломанной ногой спасли с вулкана на вертолете и сняли на видео</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyanina-so-slomannoy-nogoy-spasli-s-vulkana-na-vertolete-i-snyali-na-video/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиянам спрогнозировали резкое удорожание поездок на такси</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyanam-sprognozirovali-rezkoe-udorozhanie-poezdok-na-taksi/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Стало известно о мерах в России после взрыва не добравшейся до пункта назначения фуры</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/poyavilis-podrobnosti-o-merah-v-rossii-posle-vzryva-ne-dobravsheysya-do-punkta-naznacheniya-fury/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Немец переехал в Россию и научился радоваться простым вещам</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/nemets-priehal-v-rossiyu-i-nauchilsya-radovatsya-prostym-vescham/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Появилась информация об одном из участников переговоров России и Украины</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/poyavilas-informatsiya-ob-odnom-iz-uchastnikov-peregovorov-rossii-i-ukrainy/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Самолет с россиянами на борту подал сигнал срочности из-за отказа двигателя</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/samolet-s-rossiyanami-na-bortu-podal-signal-srochnosti-iz-za-otkaza-dvigatelya/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Минобороны России рассказало об использовании 3D-печати в зоне СВО</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/minoborony-rossii-rasskazalo-ob-ispolzovanii-3d-pechati-v-zone-svo/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Первое свидание для россиянина закончилось арестом</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/pervoe-svidanie-dlya-rossiyanina-zakonchilos-arestom/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиянин нашел бездомного и помог ему вернуться домой</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyanin-nashel-bezdomnogo-i-pomog-emu-vernutsya-domoy/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Место переговоров России и Украины начали проверять на наличие бомбы</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/na-meste-peregovorov-rossii-i-ssha-v-stambule-nachalis-poiski-vzryvnogo-ustroystva/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Состояние богатейших россиян выросло</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/sostoyanie-bogateyshih-rossiyan-vyroslo/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В США раскрыли планы НАТО в отношении России</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/smi-raskryli-chto-nato-sdelala-na-granitse-s-rossiey/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России захотели запретить концернам продавать машины онлайн без посредников</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-rossii-zahoteli-zapretit-kontsernam-prodavat-mashiny-onlayn-bez-posrednikov/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">МИД уличил Киев в попытках удара по приграничью России перед переговорами</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/mid-ulichil-kiev-v-popytkah-udara-po-prigranichyu-rossii-pered-peregovorami/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россияне стали осторожнее оценивать свои возможности на рынке труда</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyane-stali-ostorozhnee-otsenivat-svoi-vozmozhnosti-na-rynke-truda/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России захотели создать дружины для защиты традиционных ценностей</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-rossii-zahoteli-sozdat-druzhiny-dlya-zaschity-traditsionnyh-tsennostey/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Большинство вузов России упали в мировом рейтинге</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/bolshinstvo-vuzov-rossii-upali-v-mirovom-reytinge/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Стало известно число взятых в мае армией России населенных пунктов</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/stalo-izvestno-chislo-vzyatyh-v-mae-armiey-rossii-naselennyh-punktov/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России задумались о возрождении доходных домов</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/dokhod-dom/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">России не оказалось в топ-5 стран Европы по доступности электроэнергии</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossii-ne-okazalos-v-top-5-stran-evropy-po-dostupnosti-elektroenergii/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Жаривший шашлыки и считавший взрывы россиянин попал на видео</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/zharivshiy-shashlyki-i-schitavshiy-vzryvy-rossiyanin-popal-na-video/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Число работающих на двух и более работах россиян упало до минимума</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/chislo-rabotayuschih-na-dvuh-i-bolee-rabotah-rossiyan-upalo-do-minimuma/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиянин описал обед от бывшего зэка в деревне Польши фразой «блюдо было шикарным»</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyanin-opisal-obed-ot-byvshego-zeka-v-derevne-polshi-frazoy-blyudo-bylo-shikarnym/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Украина в ночь перед переговорами в Стамбуле выпустила по России свыше 150 дронов</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/ukraina-za-noch-vypustila-po-rossii-svyshe-150-dronov-v-den-peregovorov-v-stambule/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Президентом Польши стал объявленный в розыск Россией кандидат</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/prezidentom-polshi-stal-ob-yavlennyy-v-rozysk-rossiey-kandidat/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Россиян предупредили об опасных последствиях укусов насекомых у питомцев</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiyan-predupredili-ob-opasnyh-posledstviyah-ukusov-nasekomyh-u-pitomtsev/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Во Франции раскрыли ключевую тему переговоров России и Украины</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/vo-frantsii-raskryli-klyuchevuyu-temu-peregovorov-rossii-i-ukrainy/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">МИД России оценил необходимость в альтернативных площадках для переговоров по Украине</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/rossiya-otsenila-neobhodimost-v-alternativnyh-ploschadkah-dlya-peregovorov-po-ukraine/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России получили украинский вариант меморандума по урегулированию конфликта. На что согласен и чего требует Киев?</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-rossii-poluchili-ukrainskiy-variant-memoranduma-po-uregulirovaniyu-konflikta-na-chto-soglasen-i-chto-trebuet-kiev/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Пьяный россиянин попытался изнасиловать дочь в день смерти ее матери</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/pyanyy-rossiyanin-popytalsya-iznasilovat-doch-v-den-smerti-ee-materi/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В США захотели успеть ввести «сокрушительные» санкции против России до саммита G7</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-ssha-zahoteli-uspet-vvesti-sokrushitelnye-sanktsii-protiv-rossii-do-sammita-g7/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Часть делегации России вернулась в гостиницу в Стамбуле</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/chast-delegatsii-rossii-vernulas-v-gostinitsu-v-stambule/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России допустили ядерный удар после атаки ВСУ по аэродромам</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-rossii-dopustili-yadernyy-udar-posle-ataki-vsu-po-aerodromam/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В России отреагировали на опубликованный в украинских СМИ меморандум Киева</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/memorandum-kieva/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">В украинском меморандуме увидели ловушку для России</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/v-ukrainskom-memorandume-uvideli-lovushku-dlya-rossii/</span>
+                    </div>
+                </div>
+            
+                <div class="news-item">
+                    <div class="news-title"></div>
+                    <div class="news-summary">Желание России продолжать переговоры с Украиной после серии ударов объяснили</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="http://127.0.0.1:8000/news" target="_blank">lenta.ru</a></span><br>
+                        <span>Опубликовано: https://lenta.ru/news/2025/06/02/zhelanie-rossii-prodolzhat-peregovory-s-ukrainoy-posle-serii-udarov-ob-yasnili/</span>
+                    </div>
+                </div>
+            
+        
+    </div>
+
+</body></html>
