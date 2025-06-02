@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Мониторинг новостей по ключевым словам</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; }
+        h1 { color: #2b3a55; }
+        .news-item { border-bottom: 1px solid #e0e0e0; padding: 18px 0; }
+        .news-item:last-child { border-bottom: none; }
+        .news-title { font-size: 1.2em; font-weight: bold; color: #1a237e; }
+        .news-summary { margin: 8px 0 6px 0; color: #444; }
+        .news-meta { font-size: 0.95em; color: #888; }
+        .news-link { color: #1976d2; text-decoration: none; }
+        .news-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Актуальные новости</h1>
+        {% if news %}
+            {% for n in news %}
+                <div class="news-item">
+                    <div class="news-title">{{ n.index }}</div>
+                    <div class="news-summary">{{ n.title }}</div>
+                    <div class="news-meta">
+                        <span>Источник: <a class="news-link" href="{{ n[2] }}" target="_blank">{{ n.source }}</a></span><br>
+                        <span>Опубликовано: {{ n.url }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Пока нет новостей по выбранным ключевым словам.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

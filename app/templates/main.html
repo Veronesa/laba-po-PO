@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: bisque;
+        }
+        .main_li{
+            width: 200px;
+            height: 30px;
+            align-items: center;
+            text-align: center;
+            background-color:burlywood;
+            display: flex;
+            justify-content: center;
+            margin:30px;
+            border-radius:15px;
+            font-size: 20px;
+            padding: 5px;
+            
+        }
+        a{
+            text-decoration: none;
+        }
+        .links{
+            margin: auto;
+            display: flex;
+            grid-template-columns: repeat(3, 1fr);
+            justify-items: center;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            list-style-type: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+     <ul class="links">
+        <li>
+            <a href="/news" class="main_li">Новости</a>
+        </li>
+        <li>
+            <a href="/rss" class="main_li">RSS источники</a>
+        </li>
+        <li>
+            <a href="/keywords" class="main_li">Ключевые слова</a>
+        </li>
+    </ul>
+</body>
+</html>
